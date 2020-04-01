@@ -20,7 +20,7 @@ class Fighter:
 		self.set_props(json_data['props'])
 
 		# Set the sports books
-		for sb_name, sb_val in json_data['sportsbooks'].items():
+		for sb_name, sb_val in json_data['sports_books'].items():
 			self.sports_books[sb_name] = sb_val
 
 	def set_props(self, props: str) -> None:  # Setter method for props
