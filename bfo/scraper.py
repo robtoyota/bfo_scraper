@@ -41,7 +41,7 @@ class Scraper:
 		# Loop through the fights
 		fight_tables = dom.find_all("table", class_="odds-table")
 		for fight_table in fight_tables:  # Loop through the different fight tables
-			sportsbooks_names = Scraper.extract_sports_book_names_from_dom(fight_table)
+			sports_books_names = Scraper.extract_sports_book_names_from_dom(fight_table)
 			# Loop through each fighter and set of props
 			css_classes_fighter = ['odd', 'even']
 			css_classes_prop = ['pr', 'pr-odd']
@@ -52,7 +52,7 @@ class Scraper:
 				if len(dom.find_all("td")) == 0:
 					continue
 
-				sports_books = Scraper.extract_sports_book_values(dom, sportsbooks_names)
+				sports_books = Scraper.extract_sports_book_values(dom, sports_books_names)
 
 				# If the dom element is for fighters, then load the fighter
 				if [i for i in dom['class'] if i in css_classes_fighter]:  # Loop through element's classes
@@ -69,7 +69,7 @@ class Scraper:
 
 		return {'fighters': fighters, 'props': props}
 
-	# Get the name of the sportsbooks from the column headers
+	# Get the name of the sports_books from the column headers
 	@staticmethod
 	def extract_sports_book_names_from_dom(dom: BeautifulSoup) -> list:
 		sports_books = []
@@ -92,7 +92,7 @@ class Scraper:
 
 	# Extract the sports book values for each sports book name
 	@staticmethod
-	def extract_sports_book_values(dom: BeautifulSoup, sportsbooks_names: list) -> dict:
+	def extract_sports_book_values(dom: BeautifulSoup, sports_books_names: list) -> dict:
 		i = 0
 		sports_books = {}
 
@@ -109,7 +109,7 @@ class Scraper:
 				except TypeError:  # If there is no class, then keep going
 					pass
 				# Add the sports book value to the returned dict
-				sports_books[sportsbooks_names[i]] = sb.text
+				sports_books[sports_books_names[i]] = sb.text
 			i += 1
 
 		return sports_books
