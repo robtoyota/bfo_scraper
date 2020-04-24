@@ -21,7 +21,7 @@ class Scraper:
 		}
 
 		# Get the HTML of the page
-		page = requests.get(url, headers=headers)
+		page = requests.get(url, headers=headers, verify=False)
 
 		# Make sure the status response is good
 		if page.status_code != 200:  # Was there a problem getting the page?
