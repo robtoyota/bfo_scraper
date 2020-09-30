@@ -1,8 +1,8 @@
 {
 	"MAILGUN": {
-	  "email_domain": "",
-	  "api_key": "",
-	  "recipients": []
+	  "email_domain": "sandbox75cecdbaf2274b45971dc97f3a4b3aee.mailgun.org",
+	  "api_key": "f124864cd0e5a7e8b4392b3f3c8e4703-52b0ea77-fadade3b",
+	  "recipients": ["ryanbtoyota@gmail.com", "ultimatefirestorm@gmail.com"]
 	},
 	"SCRAPING": {
 	  "url": "https://www.bestfightodds.com/",
