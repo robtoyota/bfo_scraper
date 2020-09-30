@@ -43,7 +43,7 @@ def main(sleep_minutes: float) -> None:
 
 if __name__ == '__main__':
 	# Accept the sleep minutes
-	in_sleep_minutes = 1
+	in_sleep_minutes = -1  # Default to end after a single run
 	if len(sys.argv) > 1:
 		try:
 			in_sleep_minutes = float(sys.argv[1])
