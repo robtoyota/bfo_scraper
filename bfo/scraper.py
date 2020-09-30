@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 from bfo.fighter import Fighter
 from bfo.prop import Prop
 
@@ -99,7 +100,8 @@ class Scraper:
 		# Loop through each column
 		for td in dom.find_all("td"):
 			# Get the sports book container span
-			sb = td.find("span", class_="tw")
+			sb = td.find("span", id=re.compile('^oID'))  # Identify the span by an ID that starts with oID#########
+			# sb = td.find("span[id^=oID]")  # Identify the span by an ID that starts with oID#########
 			if sb:
 				# Exclude columns that we don't want
 				try:
