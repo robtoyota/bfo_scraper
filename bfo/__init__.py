@@ -171,6 +171,11 @@ class BFOScraper:
 
 			# Compare the sports_books to see if any new ones were added
 			for sb_name, sb_val in dom.sports_books.items():
+				# Skip specific books
+				if sb_name in ['William H.', 'SportBet', 'BetWay']:
+					continue
+
+				# Loop through each sportbook
 				if sb_name in old.sports_books:
 					if sb_val != old.sports_books[sb_name]:
 						# messages.append(
