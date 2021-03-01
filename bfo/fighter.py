@@ -10,8 +10,8 @@ class Fighter:
 
 	def load_dom(self, dom: BeautifulSoup, sports_books: dict) -> None:
 		self.id = dom.find("th").find("a")['href']
-		self.name = dom.find("th").find("a").text
-		self.set_props(dom.find("td", class_="prop-cell").find("a").text)
+		self.name = dom.find("th").find("a").find("span").text
+		self.set_props(dom.find("td", class_="prop-cell").text)
 		self.sports_books = sports_books
 
 	def load_json(self, json_data: dict) -> None:
