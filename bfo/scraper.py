@@ -39,24 +39,26 @@ class Scraper:
 		props = {}
 		fighter_ids = []
 
+		# CSS class names that define whether the <tr> contains data for a fighter or for a prop
+		css_classes_fighter = [None]
+		css_classes_prop = ['pr', 'pr-odd']
+
 		# Loop through the fights
 		fight_tables = dom.find_all("table", class_="odds-table")
 		for fight_table in fight_tables:  # Loop through the different fight tables
+			# Extract the header with the names of the sports books
 			sports_books_names = Scraper.extract_sports_book_names_from_dom(fight_table)
-			# Loop through each fighter and set of props
-			css_classes_fighter = ['odd', 'even']
-			css_classes_prop = ['pr', 'pr-odd']
 
 			# Loop through each row in the fight table
-			for dom in fight_table.find("tbody").find_all("tr", class_=css_classes_fighter + css_classes_prop):
+			for dom in fight_table.find("tbody").find_all("tr"):
 				# Make sure this row has <td> elements, and isn't just the "odds-table-responsive-header"
 				if len(dom.find_all("td")) == 0:
 					continue
 
 				sports_books = Scraper.extract_sports_book_values(dom, sports_books_names)
 
-				# If the dom element is for fighters, then load the fighter
-				if [i for i in dom['class'] if i in css_classes_fighter]:  # Loop through element's classes
+				# If the dom element is for fighters, then load the fighter.
+				if not dom.has_attr('class'):  # The <tr>s without a class are the fighter rows
 					f = Fighter()
 					f.load_dom(dom, sports_books)
 					fighters[f.id] = f  # Add the Fighter instance to the dict being returned
@@ -65,6 +67,8 @@ class Scraper:
 				# If the dom element is for props, then load the props
 				elif [i for i in dom['class'] if i in css_classes_prop]:  # Loop through element's classes
 					p = Prop()
+					# Context note: The website layout has two rows with the `fighter` data, followed by all the props. This is
+					# the reason that the fighters[] and fighter_ids[] lists are expected to be populated at this point
 					p.load_dom(dom, sports_books, fighters[fighter_ids[-1]], fighters[fighter_ids[-2]])
 					props[p.id] = p  # Add the Prop instance to the dict being returned
 
